@@ -1,8 +1,10 @@
 #encoding=utf-8
 import os
 ROOT_PATH = os.path.dirname(__file__)
+import djcelery
+djcelery.setup_loader()
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -17,14 +19,14 @@ ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = '@qq.com'
-EMAIL_HOST_PASSOWORD = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = '@qq.com'
 
 LOGIN_URL = '/'
 
 # 分页
-PAGINATION_PER_PAGE = 2
+PAGINATION_PER_PAGE = 30
 TOPIC_PAGINTION_PER_PAGE = 50   # 每页话题数量
 GROUP_PAGINTION_PER_PAGE = 3    # 每页群组数量
 GROUP_MANAGED_PER_PAGE = 20     # 我管理的群组分页数目
@@ -74,7 +76,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -176,7 +178,9 @@ INSTALLED_APPS = (
     'friends',
     'django_messages',
     'social',
-    'sys_notification'
+    'sys_notification',
+    'djcelery',
+    'kombu.transport.django'
     # 'notification',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
