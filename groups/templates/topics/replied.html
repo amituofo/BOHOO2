@@ -1,0 +1,52 @@
+{% extends "topic_base.html" %}
+
+{% load bootstrap_toolkit %}
+
+{% block title %}
+    我回复的话题
+{% endblock %}
+
+{% block descrition %}
+    我回复的话题
+{% endblock %}
+
+{% block head_other %}
+    {{ block.super }}
+    <style type="text/css">
+
+    </style>
+{% endblock %}
+
+{% block left_content %}
+    <div class="row-fluid">
+        <div class="span12">
+            <table class="table">
+                <tbody>
+                {% for t in topics %}
+                    <tr>
+                        <td><a href="{% url 'topic_detail' topic_id=t.id %}">{{ t.name }}</a></td>
+                        <td><a href="{% url "profile_view" tid=t.creator.id %}">{{ t.creator }}</a></td>
+                        <td>{{ t.reply_amount }}回复</td>
+                        <td>{{ t.last_reply_add|date:"m-j H:i:s" }}</td>
+                        <td><a href="{% url 'group_detail' t.group.id %}?type=recent">{{ t.group.name }}</a></td>
+                    </tr>
+                {% endfor %}
+                <div class="row-fluid">
+                    <div class="span12"><h3>我回复的话题</h3></div>
+                </div>
+                </tbody>
+            </table>
+            {% if topics %}
+            {{ topics|pagination }}
+            {% endif %}
+            <hr>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_other %}
+    {{ block.super }}
+    <script type="text/javascript">
+    $("#topic_replied").addClass("active");  // 当前页
+    </script>
+{% endblock %}

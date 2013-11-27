@@ -1,0 +1,4 @@
+{% load i18n %}{% blocktrans with group as group_avatar_creator and group_avatar.get_absolute_url as group_avatar_url %}{{ group_avatar_creator }} has updated the group avatar {{ group_avatar }}.
+
+http://{{ current_site }}{{ group_avatar_url }}
+{% endblocktrans %}

@@ -1,0 +1,95 @@
+{% extends 'group_base.html' %}
+{% load group_avatar_tags %}
+{% load bootstrap_toolkit %}
+
+{% block title %}我管理的群组{% endblock %}
+
+{% block head_other %}
+    {{ block.super }}
+    <style type="text/css">
+    .right_content{
+        margin: 10px 0 10px 0;
+    }
+    .box{
+        margin: 0 0 25px;
+        clear: both;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 0 #f2f4f5;
+    }
+    .box-module{
+        position: relative;
+        padding: 20px 12px;
+    }
+    .avatar img{
+        padding-left: 30px;
+    }
+    .avatar .edit-group{
+        margin-top: 10px;
+    }
+    </style>
+{% endblock %}
+
+{% block recommend %}
+{% endblock %}
+
+{% block left_content %}
+    {{ block.super }}
+    <div class="create-group">
+    <a href="{% url 'new_group' %}"><i class="icon-plus"></i>申请创建群组</a>
+    </div>
+{% endblock %}
+
+{% block right_content %}
+    <div class="container-fluid right_content">
+        {% for g in groups %}
+        <div class="row-fluid box">
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <a href="{% url 'group_detail' group_id=g.id %}?type=recent">{{ g.name }}</a>
+                            </div>
+                            <div class="span3">
+                                <a href="{% url 'edit_group' group_id=g.id %}"
+                                   class="btn btn-primary edit-group">修改群组资料</a>
+                            </div>
+                            <div class="span3">
+                                <div class="text-warning">
+                                    {% if g.member_join == 'need_check' %}
+                                        申请加入群组:
+                                        <a href="{% url 'apply_deal' group_id=g.id %}" class="text-error">
+                                            <strong>{{ g.get_applicant_member_num }}</strong>
+                                        </a><br/>
+                                    {% endif %}
+                                    申请管理员:
+                                    <a href="{% url 'apply_deal' group_id=g.id %}" class="text-error">
+                                        <strong>{{ g.get_applicant_manager_num }}</strong>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <div class="row-fluid">
+                <div class="span12">
+                    <p class="text-info">Ooops!你还没有管理的群组哦!</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% if groups %}
+            {{ groups|pagination }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block js_other %}
+    {{ block.super }}
+    <script type="text/javascript">
+    $("#group_managed").addClass("active");
+    </script>
+{% endblock %}

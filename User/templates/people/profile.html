@@ -1,0 +1,219 @@
+{% extends 'people_base.html' %}
+{% load avatar_tags %}
+
+{% block title %}{{ request.user.username }}--个人资料{% endblock %}
+
+{% block descrition %}{{ request.user.username }}--个人资料{% endblock %}
+
+{% block head_other %}
+    <style type="text/css">
+    .profile-box{
+        margin: 0 0 25px;
+        clear: both;
+        border-radius: 4px;
+        border: 2px solid #ddd;
+        box-shadow: 0 1px 0 #f2f4f5;
+    }
+    .profile-box-module{
+        position: relative;
+        padding: 20px 12px;
+    }
+    .profile-box-module+.profile-box-module{
+        border-top:1px solid #ddd;
+    }
+    .avatar img{
+        padding-bottom: 14px;
+    }
+    .right_content{
+        margin-left: 0 !important;
+    }
+    #pills-follower{
+        margin-left: 40px;
+    }
+    </style>
+{% endblock %}
+
+
+{% block left_content %}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+               <div class="row-fluid profile-box">
+        <div class="profile-box-module">
+            <div class="span4">
+                <span class="pull-left"><a href="#">{{ user.username }}</a>
+                    <i class="icon-double-angle-right"></i>个人资料</span>
+            </div>
+            <div class="span4 avatar">
+                {% avatar user %}
+            </div>
+            <div class="span4">
+                <span class="pull-right"><a href="{% url 'reset_password' user_id=request.user.id %}">修改密码</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-box">
+        <div class="profile-box-module">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <span class="text-info">签名</span>
+                        </div>
+                        <div class="span10">
+                            {% if user.sign %}
+                                {{ user.sign }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-box-module">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <span class="text-info">职业</span>
+                        </div>
+                        <div class="span8">
+                            {% if user.job %}
+                                {{ user.job }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <span class="text-info">注册时间</span>
+                        </div>
+                        <div class="span8 sex">
+                            {% if user.date_joined %}
+                                {{ user.date_joined|date:"Y-m-d H:i:s" }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-box-module">
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <span class="text-info">国家</span>
+                        </div>
+                        <div class="span8">
+                            {% if user.country %}
+                                {{ user.country }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <span class="text-info">州省</span>
+                        </div>
+                        <div class="span8">
+                            {% if user.state %}
+                                {{ user.state }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <span class="text-info">市县</span>
+                        </div>
+                        <div class="span8">
+                            {% if user.city %}
+                                {{ user.city }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right_content %}
+    <div class="row-fluid info-tab">
+        <ul class="nav nav-pills">
+            <li id="pills-followed" class="active">
+                <a href="#tab-followed" data-toggle="tab">关注了</a>
+            </li>
+            <li id="pills-follower">
+                <a href="#tab-follower" data-toggle="tab">关注者</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="row-fluid tab-pane active" id="tab-followed">
+            <table class="table followed">
+                <tbody>
+                {% for f in followed %}
+                    <tr>
+                    <td class="follow_avatar" style="width:20%"><a href="{% url 'info_view' tid=f.to_user.id %}">
+                        {% avatar f.to_user 40 %}</a>
+                    </td>
+                    <td>
+                        <ul class="unstyled">
+                            <li>
+                                <a href="{% url 'info_view' tid=f.to_user.id %}">{{ f.to_user.username }}</a>
+                                {% if f.to_user.job %}
+                                <span class="muted">|职业:{{ f.from_user.job }}</span>
+                                {% endif %}
+                            </li>
+                            <li class="muted">{{ f.to_user.sign|truncatechars:30 }}</li>
+                        </ul>
+                    </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                    <td><h4 class="muted">还没有关注任何人</h4></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row-fluid tab-pane" id="tab-follower">
+            <table class="table follower">
+                <tbody>
+                {% for f in follower %}
+                    <tr>
+                    <td class="follow_avatar" style="width:20%"><a href="{% url 'info_view' tid=f.from_user.id %}">
+                        {% avatar f.from_user 40 %}</a>
+                    </td>
+                    <td>
+                        <ul class="unstyled">
+                            <li>
+                                <a href="{% url 'info_view' tid=f.from_user.id %}">{{ f.from_user.username }}</a>
+                                {% if f.from_user.job %}
+                                <span class="muted">|职业:{{ f.from_user.job }}</span>
+                                {% endif %}
+                            </li>
+                            <li class="muted">{{ f.from_user.sign|truncatechars:30 }}</li>
+                        </ul>
+                    </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                    <td><h4 class="muted">还没有任何人关注</h4></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+

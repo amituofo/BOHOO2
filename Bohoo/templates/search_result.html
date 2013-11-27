@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load compress %}
+{% load timeformat %}
+{% load bootstrap_toolkit %}
+
+{% block descrition %}Bohoo首页{% endblock %}
+{% block title %}Bohoo首页{% endblock %}
+
+{% block head_other %}
+    <style type="text/css">
+    .recent-topic ul li{
+        list-style-type: none;
+    }
+    .table th,.table td{
+        text-align: center;
+    }
+    .table th{
+        font-weight: bolder !important;
+    }
+    .nav-list{
+        padding: 0 !important;
+    }
+    .nav-list > li > a{
+        padding: 3px 10px !important;
+        color: #000000;
+    }
+    .accordion-toggle{
+        font-weight: bolder;
+    }
+    .table th,.table td{
+        text-align: left !important;
+    }
+    .table th a{
+        color: #000000 !important;
+    }
+    .table{
+        margin-bottom: 40px;
+    }
+    </style>
+{% endblock %}
+
+{% block main %}
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="accordion" id="accordion1">
+                        {% for c in categories %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#accordion_{{ forloop.counter0 }}">
+                                    {{ c.name }}
+                                </a>
+                            </div>
+                            <div id="accordion_{{ forloop.counter0 }}"  class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <ul class="nav nav-list left-list">
+                                        {% for t in c.category_parent.all %}
+                                        <li id="c_{{ t.id }}"><a href="{% url 'index' %}?c_id={{ t.id }}&ca={{ forloop.parentloop.counter0 }}">{{ t.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="span9">
+                    {% if ty == 'group' %}
+                        <h2>群组搜索:{{ content }}</h2>
+                    {% elif ty == 'topic' %}
+                        <h2>话题搜索:{{ content }}</h2>
+                    {% endif %}
+                    <ul class="nav nav-pills">
+                        <li class="search-group"><a href="{% url 'search' %}?ty=group&search_content={{ content }}">群组</a></li>
+                        <li class="search-topic"><a href="{% url 'search' %}?ty=topic&search_content={{ content }}">话题</a></li>
+                    </ul>
+
+                    {% if ty == 'group' %}
+                        <table class="table table-hover">
+                            {% for g in groups %}
+                                <tr>
+                                    <td style="width: 30%">
+                                        <a href="{% url 'group_detail' group_id=g.id %}?type=recent">{{ g.name|truncatechars:25 }}</a>
+                                    </td>
+                                    <td style="width: 60%;">
+                                        <span>{{ g.get_members }}个成员</span> <br />
+                                        <span class="muted">{{ g.description|truncatechars:150 }}</span>
+                                    </td>
+                                    <td style="width: 10%">
+                                        {{ g.place }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        {% if groups %}
+                            {% bootstrap_pagination groups url="/search?page=1&ty=group&search_content=" align="right" %}
+                        {% else %}
+                            <h4 class="muted">没有搜索结果哦!</h4>
+                        {% endif %}
+                    {% elif ty == 'topic' %}
+                        <table class="table table-hover">
+                            {% for t in topics %}
+                                <tr>
+                                    <td><a href="{% url 'topic_detail' topic_id=t.id %}">{{ t.name|truncatechars:25 }}</a></td>
+                                    <td>{{ t.create_time|date:"m-d H:i:s" }}</td>
+                                    <td>{{ t.reply_amount }}回复</td>
+                                    <td>
+                                        <a href="{% url 'group_detail' group_id=t.group.id %}?type=recent">{{ t.group.name|truncatechars:20 }}</a>
+                                    </td>
+                                    <td>
+                                        {{ t.group.place }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        {% if topics %}
+                            {% bootstrap_pagination topics url="/search?page=1&ty=topic" align="right" %}
+                        {% else %}
+                            <h4 class="muted">没有搜索结果哦!</h4>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if not ty %}
+                        <span class="muted">没有结果哦!请修改关键词试试吧!</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block js_other %}
+    <script type="text/javascript">
+        {% if ty == 'group' %}
+            $('li.search-group').addClass('active');
+        {% elif ty == 'topic' %}
+            $('li.search-topic').addClass('active');
+        {% endif %}
+
+        // 初始化时使用js加上search_content
+        {% if topics or groups %}
+        $(document).ready(function(){
+            $('.pagination>ul li a').each(function(){
+                var base_href = $(this).attr('href');
+                $(this).attr('href', base_href + '&search_content={{ content }}');
+            })
+        });
+        {% endif %}
+    </script>
+{% endblock %}

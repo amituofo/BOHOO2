@@ -1,0 +1,224 @@
+{% extends "group_base.html" %}
+{% load group_avatar_tags %}
+
+{% block title %}修改群组信息{% endblock %}
+{% block head_other %}
+    <style type="text/css">
+        .box {
+            margin: 0 0 25px;
+            clear: both;
+            border-radius: 4px;
+            border: 2px solid #ddd;
+            box-shadow: 0 1px 0 #f2f4f5;
+        }
+
+        .box-module {
+            position: relative;
+            padding: 20px 12px;
+        }
+
+        .box-module+.box-module {
+            border-top: 1px solid #ddd;;
+        }
+
+        .empty-error {
+            background-color: #da4f49;
+        }
+        #id_description{
+            height: 100px;
+        }
+
+        .avatar img {
+            padding-bottom: 14px;
+        }
+    </style>
+{% endblock %}
+
+{% block left_content %}
+{% endblock %}
+
+
+{% block right_content %}
+    <div class="row-fluid box">
+        <div class="box-module">
+            <div class="span6">
+                <span class="pull-left"><a href="#">{{ t_group.name }}</a>
+                    <i class="icon-double-angle-right"></i>编辑群组资料</span>
+            </div>
+            <div class="span6">
+                <span class="pull-right"><a href="{% url 'group_detail' group_id=t_group.id %}?type=recent">返回群组</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid box">
+        <div class="box-module">
+            <div class="span3">
+                <span class="text-info">头像</span>
+            </div>
+            <div class="span3 avatar">
+                {% group_avatar t_group %}
+            </div>
+            <div class="span6">
+                <span><a href="{% url 'group_avatar_change' group_id=t_group.id %}">修改头像</a></span>
+                <span><a href="{% url 'group_avatar_delete' group_id=t_group.id %}">删除头像</a></span>
+            </div>
+        </div>
+    </div>
+    <form method="post" id="new-group-form">
+        <div class="row-fluid box">
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <span class="text-info"><span class="mustin">*</span>{{ form.group_type.label }}</span>
+                    </div>
+                    <div class="span9">
+                        {{ form.group_type }}
+                    <span class="help-inline">
+                        <span class="text-warning">公开:任何人可见;秘密:需群组成员发出邀请才可加入.</span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <span class="text-info"><span class="mustin">*</span>{{ form.member_join.label }}</span>
+                    </div>
+                    <div class="span9">
+                        {{ form.member_join }}
+                    <span class="help-inline">
+                        <span class="text-warning">任何人:任何用户都可以加入,无需验证<br/>需要验证:需群组管理员同意后才能加入群组</span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <span class="text-info"><span class="mustin">*</span>{{ form.name.label }}</span>
+                    </div>
+                    <div class="span9">
+                        {{ form.name }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <span class="text-info"><span class="mustin">*</span>分类</span>
+                    </div>
+                    <div class="span4">
+                            <select class="span10" id="job_category">
+                                <option class="">---</option>
+                                <option value="it" class="it">计算机软件/互联网</option>
+                                <option value="elec" class="elec">通信/电子</option>
+                                <option value="trade" class="trade">贸易/批发/零售</option>
+                                <option value="finance" class="finance">会计/金融</option>
+                                <option value="medical" class="medical">制药/生物/医疗</option>
+                                <option value="culture" class="culture">文化/广告/媒体</option>
+                                <option value="building" class="building">房地产/建筑</option>
+                                <option value="education" class="education">教育/培训/科研</option>
+                                <option value="professional" class="professional">专业服务</option>
+                                <option value="machine" class="machine">加工/机械/制造</option>
+                                <option value="traffic" class="traffic">物流/运输</option>
+                                <option value="services" class="services">服务行业</option>
+                                <option value="energy" class="energy">能源/化工/原材料</option>
+                                <option value="government" class="government">政府/其他</option>
+                            </select>
+                        </div>
+                    <div class="span4">
+                        <select class="span11 required" id="id_category" name="category" disabled="disabled">
+                            <option value="" selected="selected">---</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <span class="text-info"><span class="mustin">*</span>{{ form.place.label }}</span>
+                    </div>
+                    <div class="span9">
+                        {{ form.place }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <span class="text-info"><span class="mustin">*</span>{{ form.description.label }}</span>
+                    </div>
+                    <div class="span9">
+                        {{ form.description }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-module">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <input type="reset" class="btn btn-info btn-block" value="重置">
+                    </div>
+                    <div class="span6">
+                        {% csrf_token %}<input type="submit" class="btn btn-primary btn-block" id="id-submit" value="提交">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block js_other %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.chained.min.js"></script>
+    <script type="text/javascript" src={{ STATIC_URL }}js/job_category.js></script>  {# 引进job_category数据 #}
+    <script type="text/javascript">
+        // 分类的联动处理
+        var job_category = eval(job_categories.job_category);
+        for (var k = 0;k < job_category.length; k++){
+            var jobs = eval(job_category[k].jobs);
+            for (var l = 0; l < jobs.length; l++){
+                $("#id_category").append("<option value='"+ jobs[l].job + "' class='" + job_category[k].category + "'>" + jobs[l].job + "</option>")
+            }
+        }
+        $("#id_category").chained("#job_category");
+
+        $("#id-submit").on('click', function (e) {
+            e.preventDefault();
+            var pass_check = true;
+            $('.required').each(function () {
+                if (!$(this).val()) {
+                    $(this).parents('.box-module').addClass("empty-error");
+                    $.globalMessenger().post({
+                        message: "以*号标注的项不能为空!",
+                        hideAfter: 2,
+                        type: 'error',
+                        showCloseButton: true
+                    });
+                    pass_check = false;
+                    return false;
+                }
+            });
+            if (pass_check) {
+                $("#new-group-form").submit();
+            }
+        });
+        $(document).ready(function(){
+            // 初始化分类
+            var p_category = "{{ t_group.category.parent.name }}";
+            var category = "{{ t_group.category.name }}";
+            $('select#job_category').children('option').each(function(){
+                if ($(this).text() == p_category){
+                    $(this).attr('selected', 'selected');
+                }
+            });
+            $('select#id_category').removeAttr('disabled').html("<option selected='selected' value='"+category+"'>"+category+"</option>");
+        })
+    </script>
+{% endblock %}
+

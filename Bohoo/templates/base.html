@@ -1,0 +1,273 @@
+{% load compress avatar_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="{% block descrition %}{% endblock %}">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+    <title>{% block title %}{% endblock %}</title>
+{% compress css %}
+    <!-- boorstrap and font awesome -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/messenger/messenger.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/messenger/messenger-theme-block.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.qtip.min.css">
+    <!-- bootstrap and awesome font end -->
+    <style type="text/css">
+    .main_navbar{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .search-input{
+        width: 250px !important;
+    }
+    .input-append{
+        margin-top: 5px;
+    }
+    .main-content{
+        padding-top: 70px;
+    }
+    .border-block{
+        position: relative;
+        padding: 18px 30px 14px;
+        *padding-top: 19px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+    .profile-box{
+        margin: 0 0 25px;
+        clear: both;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 0 #f2f4f5;
+    }
+    .profile-box-module{
+        position: relative;
+        padding: 20px 12px;
+    }
+    .mustin{
+        color: red;
+    }
+    .action:hover{
+        cursor: pointer;
+    }
+    .bdage{
+        position: absolute;
+{#        top: 2px;#}
+        left: 65%;
+        font-weight: normal;
+        line-height: 1;
+        padding: 2px 5px;
+        color: #fff;
+        background: #b01;
+        border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        z-index: 999;
+{#        -moz-opacity: 0.5;#}
+{#        -khtml-opacity: 0.5;#}
+{#        opacity: 0.6;#}
+    }
+    .bdage-hor{
+        position: absolute;
+        right: 10%;
+        font-weight: normal;
+        line-height: 1;
+        padding: 2px 5px;
+        color: #fff;
+        background: #b01;
+        border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        z-index: 999;
+    }
+    .action .dropdown-menu {
+        width: 120px !important;
+        min-width: 120px !important;
+    }
+
+    #footer {
+        color: #999;
+        padding-top: 6px;
+        padding-bottom: 0;
+        margin-top: 40px;
+        overflow: hidden;
+        zoom: 1;
+        border-top: 1px dashed #ddd;
+    }
+    .fleft{
+        float: left;
+        padding-left: 90px;
+    }
+    .fright{
+        float: right;
+        padding-right: 90px;
+    }
+    /* 分页 */
+    .pagination{
+        text-align: center;
+    }
+    </style>
+{% endcompress %}
+{% block head_other %}{% endblock %}
+</head>
+
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+        <div class="main_navbar">
+            <a class="brand" href="#">伯虎</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li>
+                        <form class="search-query" action="{% url 'search' %}" method="get"> <!-- 默认显示群组 -->
+                            <div class="input-append">
+                                <input type="hidden" name="ty" value="group" />
+                                <input class="search-input" name="search_content" type="text" placeholder="搜索群组/话题" />
+                                <button class="btn btn-primary" id="search-button"><i class="icon-search icon-large"></i></button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="nav">
+                    <li>
+                        <a href="{% url 'index' %}?init=1"><i class="icon-home"></i>首页</a>
+                    </li>
+{#                    <li>#}
+{#                        <a href="#"><i class="icon-leaf"></i>推荐</a>#}
+{#                    </li>#}
+                    <li>
+                        <a href="{% url 'group_my_manage' %}"><i class="icon-comments"></i>我的伯虎</a>
+                    </li>
+                    <li class="dropdown action">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                            <i class="icon-envelope-alt"></i>通知<b id="notify-all"></b> <!-- class="bdage" -->
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{% url 'notify_group' %}">群组<b id="notify-group"></b></a></li>  <!-- class="bdage-hor" -->
+                            <li><a href="{% url 'notify_topic' %}">话题<b id="notify-topic"></b></a></li>
+                            <li><a href="{% url 'notify_friend' %}">好友<b id="notify-friend"></b></a></li>
+{#                            <li class="divider"></li>#}
+{#                            <li><a href="">全部</a></li>#}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+                <ul class="nav pull-right">
+                    {% if request.user.is_authenticated %}
+                        <li class="dropdown action">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                            {% avatar request.user 40 %}{{ request.user.username }}
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{% url 'profile_view' request.user.id %}">我的帐号</a></li>
+                            <li><a href="{% url 'profile_edit' %}">编辑个人资料</a></li>
+                            <li><a href="{% url 'reset_password' user_id=request.user.id %}">修改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{% url 'logout' %}">退出</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+{#                    <li>#}
+{#                        <a href="#" style="padding: 10px 0  0 10px !important">已有帐号? 请</a>#}
+{#                    </li>#}
+                    <li>
+                        <a href="{% url 'login' %}" style="padding-left: 0 !important"><i class="icon-fire"></i>登录</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'register' %}"><i class="icon-lemon"></i>注册</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content" style="width:1000px;margin: 0 auto;float: none;">
+    {% block main %}{% endblock %}
+</div>
+
+<footer id="footer">
+<span id="icp" class="fleft gray-link">
+    © 2013-2014 BOHOO
+</span>
+
+<span class="fright">
+    <a href="{% url 'about' %}">关于</a>
+    · <a href="{% url 'contact_us' %}">联系</a>
+    · <a href="{% url 'statement' %}">免责声明</a>
+    · <a href="#">备案信息</a>
+</span>
+</footer>
+
+{% compress js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/messenger.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery_fix_csrf.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip.min.js"></script>
+    <script type="text/javascript">
+        // 设置messager插件的样式
+        $._messengerDefaults = {
+            extraClasses: 'messenger-fixed messenger-theme-block messenger-on-top'
+        };
+        $('#search-button').click(function(e){
+            e.preventDefault();
+            var search_content = $(".search-input").val();
+            if (!search_content){
+                $.globalMessenger().post({
+                    message: "搜索内容不能为空!",
+                    hideAfter: 2,
+                    type: 'error',
+                    showCloseButton: true
+                });
+                return false;
+            }else{
+                $(".search-query").submit();
+            }
+        });
+        {% if request.user.is_authenticated %}   // 只有登录的用户才轮询获取通知
+        // 轮询获取通知
+        function get_messages(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "{% url 'get_messages' %}",
+                success: function(res){
+                    if (!!res['all']){
+                        $('#notify-all').text(res['all']).addClass('bdage');
+                    }
+                    if (!!res['for_group']){
+                        $('#notify-group').text(res['for_group']).addClass('bdage-hor');
+                    }
+                    if (!!res['for_topic']){
+                        $('#notify-topic').text(res['for_topic']).addClass('bdage-hor');
+                    }
+                    if (!!res['for_friend']){
+                        $('#notify-friend').text(res['for_friend']).addClass('bdage-hor');
+                    }
+                }
+            })
+        }
+        // 半分钟发送一次请求
+        $(document).ready(function(){
+            get_messages();
+            setInterval('get_messages()', 30000);
+        });
+        {% endif %}
+    </script>
+{% endcompress %}
+{% block js_other %}{% endblock %}
+</body>
+</html>

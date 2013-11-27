@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load compress %}
+{% load timeformat %}
+{% load bootstrap_toolkit %}
+
+{% block descrition %}Bohoo首页{% endblock %}
+{% block title %}Bohoo首页{% endblock %}
+
+{% block head_other %}
+    <style type="text/css">
+    .recent-topic ul li{
+        list-style-type: none;
+    }
+    .table th,.table td{
+        text-align: center;
+    }
+    .table th{
+        font-weight: bolder !important;
+    }
+    .nav-list{
+        padding: 0 !important;
+    }
+    .nav-list > li > a{
+        padding: 3px 10px !important;
+        color: #000000;
+    }
+    .accordion-toggle{
+        font-weight: bolder;
+    }
+    .table th,.table td{
+        text-align: left !important;
+    }
+    .table td a{
+        color: #000000 !important;
+    }
+    .table{
+        margin-bottom: 40px;
+    }
+    </style>
+{% endblock %}
+
+{% block main %}
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="accordion" id="accordion1">
+                        {% for c in categories %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#accordion_{{ forloop.counter0 }}">
+                                    {{ c.name }}
+                                </a>
+                            </div>
+                            <div id="accordion_{{ forloop.counter0 }}"  class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <ul class="nav nav-list left-list">
+                                        {% for t in c.category_parent.all %}
+                                        <li id="c_{{ t.id }}"><a href="{% url 'index' %}?c_id={{ t.id }}&ca={{ forloop.parentloop.counter0 }}">{{ t.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="span9">
+                    {% for g in groups %}
+                        <table class="table table-hover">
+                            <tr>
+                                <th><a href="{% url 'group_detail' group_id=g.id %}?type=recent">{{ g.name }}</a></th>
+                                <th style="text-align: right !important;">地点:&nbsp;&nbsp;<span class="text-info">{{ g.place }}</span></th>
+                            </tr>
+                            {% for t in g.get_last_reply_order_topic_qs %}
+                                <tr>
+                                    <td><a href="{% url 'topic_detail' topic_id=t.id %}">{{ t.name }}</a></td>
+                                    <td style="text-align: right !important;">{{ t.last_reply_add|date:"Y-m-d H:i:s" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endfor %}
+                    {% if groups %}
+                        {{ groups|pagination }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block js_other %}
+    <script type="text/javascript">
+        {% if request.GET.init %}
+            // 初始化的左侧加上active样式,所在分类展开
+            var init_ca_id = "c_" + "{{ init_ca_id }}";
+            $('#' + init_ca_id).addClass("active").parents(".accordion-body").addClass('in');
+            // 给分页加上c_id,和ca,避免出错
+            var c_id = "{{ init_ca_id }}";
+            var ca = "{{ init_ca_parent_id }}";
+            $('.pagination>ul li a').each(function(){
+                var base_href = $(this).attr('href');
+                $(this).attr('href', base_href + '&c_id='+c_id+"&ca="+ca);
+            });
+        {% endif %}
+        // 给选定的tab加上active
+        {% if request.GET.c_id %}
+            var c_id = "{{ request.GET.c_id }}";
+            $("#c_"+ c_id).addClass("active");
+        {% else %}
+            $("#c_1").addClass("active");
+        {% endif %}
+
+        // 选定的tab的corrdion展开
+        {% if request.GET.ca %}
+            var ca = "{{ request.GET.ca }}";
+            $("#accordion_" + ca).addClass("in");
+        {% endif %}
+
+       // 初始化时使用js加上search_content
+        {% if groups and not request.GET.init %}
+        $(document).ready(function(){
+            var c_id = "{{ request.GET.c_id }}";
+            var ca = "{{ request.GET.ca }}";
+            $('.pagination>ul li a').each(function(){
+                var base_href = $(this).attr('href');
+                $(this).attr('href', base_href + '&c_id='+c_id+"&ca="+ca);
+            });
+            $('#c_' + c_id).addClass("active").parents(".accordion-body").addClass('in');
+        });
+        {% endif %}
+    </script>
+{% endblock %}
