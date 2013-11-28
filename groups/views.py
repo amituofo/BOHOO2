@@ -446,7 +446,7 @@ def topic_detail(request, topic_id):
             replies = paginator.page(paginator.num_pages)
 
         # 判断当前用户是否是该小组成员和管理员
-        is_member, is_manager = request.user in topic.group.member.all(), request.user in topic.group.member.all()
+        is_member, is_manager = request.user in topic.group.member.all(), request.user in topic.group.manager.all()
 
         if request.method == "POST":
             form = replyForm(request.POST)
