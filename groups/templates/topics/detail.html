@@ -202,17 +202,17 @@
                         {% if is_member and not is_manager %}
                         <span class="muted">我是群组成员</span>
                         {% elif not is_member %}
-                            {% if topic.group.group_type == 'open' %}
+                           <!-- {% if topic.group.group_type == 'open' %}
                                 <button id="join_group" class="btn btn-primary" data-group-id={{ g.id }}>加入群组</button>
-                            {% elif topic.group.group_type == 'private' %}
+                            {% elif topic.group.group_type == 'private' %}-->
                                 <!-- button to tigger modal -->
-                                <button id="apply_join_modal_trigger" class="btn btn-primary">申请加入群组</button>
-                            {% endif %}
+                               <!-- <button id="apply_join_modal_trigger" class="btn btn-primary">申请加入群组</button>
+                            {% endif %}-->
                         {% endif %}
                         {% if is_manager %}
                             <span class="muted">我是管理员</span>
                         {% elif is_member %}
-                            <button id="apply_be_manager_modal_trigger" class="btn btn-primary">申请成为管理员</button>
+                           <!-- <button id="apply_be_manager_modal_trigger" class="btn btn-primary">申请成为管理员</button>-->
                         {% endif %}
                     </div>
                 </div>
