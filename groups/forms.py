@@ -38,7 +38,7 @@ class group(ModelForm):
     place   群组地点
     """
     GROUP_TYPE_CHOICES = (('open', u'公开'), )   # ('private', u'秘密')  暂时不启用
-    MEMBER_JOIN_CHOICES = (('everyone_can_join', '任何人'), ('need_check', '需要验证'))
+    MEMBER_JOIN_CHOICES = (('everyone_can_join', '任何人'),) #('need_check', '需要验证'))
 
     name = forms.CharField(label=u'名称',
                            widget=forms.TextInput(
