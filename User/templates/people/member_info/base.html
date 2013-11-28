@@ -93,17 +93,17 @@
                                     <div></div>
                                     {% if t_user.city %}
                                     <div class="container span12">
-                                        <span class="muted pull-left">{{ t_user.country|default:"无" }}-{{ t_user.state|default:"无" }}-{{ t_user.city|default:"无" }}</span>
+                                        <span class="muted pull-left">所在地:{{ t_user.country|default:"无" }}-{{ t_user.state|default:"无" }}-{{ t_user.city|default:"无" }}</span>
                                     </div>
                                     {% endif %}
                                     {% if t_user.job %}
                                     <div class="container span12">
-                                        <span class="muted pull-left">{{ t_user.job|default:"无" }}</span>
+                                        <span class="muted pull-left">职业:{{ t_user.job|default:"无" }}</span>
                                     </div>
                                     {% endif %}
-                                    {% if t_user.sign %}
+                                    {% if t_user.date_joined %}
                                     <div class="container span12">
-                                        <span class="muted pull-left">{{ t_user.sign|default:"无" }}</span>
+                                        <span class="muted pull-left">注册时间:{{ t_user.date_joined|date:"Y-m-d H:i:s" }}</span>
                                     </div>
                                     {% endif %}
                                 </div>
@@ -117,9 +117,10 @@
 {#                                <a class="item" href="">回复<span class="num">3</span> </a>#}
 {#                            </div>#}
                             <div class="container span8 info_navbar">
-                                <span class="item first_item">地点:<span class="muted">{{ t_user.city }}</span></span>
+                                <!--<span class="item first_item">地点:<span class="muted">{{ t_user.city }}</span></span>
                                 <span class="item">职业:<span class="muted">{{ t_user.job }}</span></span>
-                                <span class="item">注册时间:<span class="muted">{{ t_user.date_joined|date:"Y-m-d H:i:s" }}</span></span>
+                                <span class="item">注册时间:<span class="muted">{{ t_user.date_joined|date:"Y-m-d H:i:s" }}</span></span-->
+                                <span class="muted">{{ t_user.sign|default:"无" }}</span>
                             </div>
                             <div class="container span4 div_follow">
                                 {% if t_user != request.user %}
