@@ -1,6 +1,6 @@
 {% extends 'base_not_login.html' %}
 
-{% block title %}注册{% endblock %}
+{% block title %}伯虎网——职业交流社区{% endblock %}
 
 {% block head_other %}
     {{ block.super }}
@@ -30,7 +30,8 @@
         <div class="row-fluid">
             <div class="span8">
                 {# 网站功能描述 #}
-                <h4 class="text-info">欢迎来到伯虎网，在这里你可以找到同行业的朋友!</h4>
+                <h4 class="text-info">欢迎来到伯虎网——最纯粹的职业交流社区！<br><br>在这里你可以找到同行业的朋友，<br> <br>在这里你可以了解同行业的其他公司，<br><br>在这里你可以找到以前的同事, <br><br>
+                在这里你可能会找到创业伙伴，<br><br>在这里你也可以发表对某个企业工作环境，服务及产品的建议！</h4>
             </div>
             <div class="span4">
                 <div class="control-group">
@@ -43,7 +44,7 @@
                         <div class="help-block"><span class="password-help text-info"></span></div>
                         <div class="input-prepend"><span class="add-on"><i class="icon-lock"></i></span>{{ form.password1 }}</div>
                         <div class="help-block"><span class="re-password-help text-info"></span></div>
-                        <label class="checkbox"><input type="checkbox" id="id_terms">我已经阅读并同意<a href="{% url 'terms' %}">服务条款</a> </label>
+                        <label class="checkbox"><input type="checkbox" id="id_terms">我已经阅读并同意<a href="{% url 'terms' %}">服务条款及协议</a> </label>
                         <button class="btn btn-primary btn-register">注册</button>
                     </form>
 {#                        <a href="{% url 'social_weibo_login' %}" class="btn btn-primary btn-signup-weibo">微博帐号注册</a>#}
