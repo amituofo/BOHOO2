@@ -27,7 +27,7 @@ from groups.models import Group
 register = template.Library()
 
 
-@cache_result
+#@cache_result
 @register.simple_tag
 def group_avatar_url(group, size=GROUP_AVATAR_DEFAULT_SIZE):
     group_avatar = get_primary_group_avatar(group, size=size)
@@ -45,7 +45,7 @@ def group_avatar_url(group, size=GROUP_AVATAR_DEFAULT_SIZE):
     return get_default_group_avatar_url()
 
 
-@cache_result
+#@cache_result
 @register.simple_tag
 def group_avatar(group, size=GROUP_AVATAR_DEFAULT_SIZE, **kwargs):
     if not isinstance(group, Group):
@@ -90,7 +90,7 @@ def primary_group_avatar(group, size=GROUP_AVATAR_DEFAULT_SIZE):
         size, size)
 
 
-@cache_result
+#@cache_result
 @register.simple_tag
 def render_group_avatar(group_avatar, size=GROUP_AVATAR_DEFAULT_SIZE):
     if not group_avatar.thumbnail_exists(size):

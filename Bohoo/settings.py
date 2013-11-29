@@ -97,7 +97,14 @@ STATIC_ROOT = ROOT_PATH + '/static'
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
+#captcha 设置
+THE_CAPTCHA_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'captcha/font/Vera.ttf'))
 # django-avatar 设置
+
+AVATAR_DEFAULT_URL = 'http://127.0.0.1:8000/avatar/media/avatar/img/default.jpg'
+
+GROUP_AVATAR_DEFAULT_URL ='http://127.0.0.1:8000/group_avatar/media/avatar/img/default.jpg'
+
 AVATAR_STORAGE_DIR = 'avatars/'
 # AVATAR_STORAGE = MEDIA_ROOT
 

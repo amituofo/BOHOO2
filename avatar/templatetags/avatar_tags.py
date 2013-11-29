@@ -26,7 +26,7 @@ from avatar.models import Avatar
 register = template.Library()
 
 
-@cache_result
+#@cache_result
 @register.simple_tag
 def avatar_url(user, size=AVATAR_DEFAULT_SIZE):
     avatar = get_primary_avatar(user, size=size)
@@ -44,7 +44,7 @@ def avatar_url(user, size=AVATAR_DEFAULT_SIZE):
     return get_default_avatar_url()
 
 
-@cache_result
+#@cache_result
 @register.simple_tag
 def avatar(user, size=AVATAR_DEFAULT_SIZE, **kwargs):
     if not isinstance(user, get_user_model()):
