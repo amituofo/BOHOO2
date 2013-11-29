@@ -97,6 +97,12 @@ STATIC_ROOT = ROOT_PATH + '/static'
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
+#compressor 配置
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_URL = STATIC_URL
+COMPRESS_ENABLED = True
+COMPRESS_OUTPUT_DIR = 'CACHE'
+
 #captcha 设置
 THE_CAPTCHA_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'captcha/font/Vera.ttf'))
 # django-avatar 设置
