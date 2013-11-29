@@ -154,7 +154,7 @@ class Topic(models.Model):
     #add by lazytiger
     topic_type      话题类型 : 1类是系统自动发布的，没有作者 ，另一类是用户发表的，需要有作者
     """
-    name = models.CharField(max_length=1024,unique=True, verbose_name=u'名称')
+    name = models.CharField(max_length=255,unique=True, verbose_name=u'名称')
     content = models.TextField(verbose_name=u'内容')
     group = models.ForeignKey(Group, related_name='group_topic', verbose_name=u'小组')
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_topic', verbose_name=u'创建者')
