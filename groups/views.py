@@ -195,7 +195,7 @@ def ajax_quite_group(request):
 @login_required()
 def manage(request):
     """ 我管理的群组 @fanlintao """
-    groups_list = Group.objects.filter(manager=request.user)
+    groups_list = Group.objects.filter(manager=request.user)[0:100]
     # 对群组分页
     paginator = Paginator(groups_list, settings.GROUP_MANAGED_PER_PAGE)
     page = request.GET.get('page')
