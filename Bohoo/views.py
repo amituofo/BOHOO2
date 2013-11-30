@@ -68,7 +68,7 @@ def index(request):
             groups = paginator.page(paginator.num_pages)
 
 
-    recent_topics = Topic.objects.filter(status='enabled').order_by("-last_reply_add")[:5]
+    #recent_topics = Topic.objects.filter(status='enabled').order_by("-last_reply_add")[:5]
     categories = Category.objects.filter(parent__isnull=True)  # 顶级分类
     init_ca_id = Category.objects.get(name="互联网/电子商务").id   #初始化的分类的id
     init_ca_parent_id = Category.objects.get(name="互联网/电子商务").parent.id
@@ -76,7 +76,7 @@ def index(request):
     c = RequestContext(
         request, {
             'form': register_form(large_input=False),
-            'recent_topics': recent_topics,
+     #       'recent_topics': recent_topics,
             'categories': categories,
             'groups': groups,
             'init_ca_id': init_ca_id,
