@@ -126,9 +126,9 @@
                     <div class="row-fluid">
                         <div class="span1 reply_avatar people_avatar" data-t_id="{{ r.creator.id }}">
                             {% if request.user == r.creator %}
-                            <a href="{% url "profile_view" tid=r.creator.id %}">{% avatar topic.creator 55 %}</a>
+                            <a href="{% url "profile_view" tid=r.creator.id %}">{% avatar r.creator 55 %}</a>
                             {% else %}
-                                <a href="{% url "info_view" tid=r.creator.id %}">{% avatar topic.creator 55 %}</a>
+                                <a href="{% url "info_view" tid=r.creator.id %}">{% avatar r.creator 55 %}</a>
                             {% endif %}
                         </div>
                         <div class="span11 reply-content">
