@@ -99,7 +99,7 @@
                                 {% for i in topic.image.all %}
                                     <div><img src="{{ i.get_topic_image_url }}" style="width: 90%;margin-bottom: 20px"></div>
                                 {% endfor %}
-                                <div class="span11">{{ topic.content|linebreaksbr }}</div>
+                                <div class="span11"><p>{{ topic.content|linebreaksbr }}</p></div>
                             </div>
                             {% if request.user == topic.creator or request.user in topic.group.manager.all %}
                             <div class="span12">
