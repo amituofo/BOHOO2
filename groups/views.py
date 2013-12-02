@@ -386,7 +386,16 @@ def ajax_delete_topic_image(request):
 def group_topic(request):
     """ 我的群组的话题 @fanlintao """
     groups = Group.objects.filter(member=request.user)
-    topics_list = Topic.objects.filter(group__in=groups, status='enabled').order_by("-last_reply_add")[0: 100] # 显示100个
+    #topics_list = Topic.objects.filter(group__in=groups, status='enabled').order_by("-last_reply_add")[0: 100] # 显示100个
+    topics_list = []
+    if groups.count()!=0:
+
+        for i in range(0,groups.count()):
+
+            for item in groups[i].group_topic.all():
+                topics_list.append(item)
+
+    
     paginator = Paginator(topics_list, settings.TOPIC_MYGROUP_PER_PAGE)
     page = request.GET.get('page')
     try:
@@ -401,7 +410,12 @@ def group_topic(request):
 @login_required()
 def created_topic(request):
     """我创建的话题 @fanlintao """
-    topics_list = Topic.objects.filter(creator=request.user, status='enabled').order_by("-last_reply_add")[0:100] # 显示100个
+    #topics_list = Topic.objects.filter(creator=request.user, status='enabled').order_by("-last_reply_add")[0:100] # 显示100个
+    if request.user.email=='110646513@qq.com':
+        topics_list= request.user.creator_topic.all().order_by('-id')[0:100]
+    else:
+        topics_list= request.user.creator_topic.all().order_by("-last_reply_add")[0:100]
+
     paginator = Paginator(topics_list, settings.TOPIC_ADD_PER_PAGE)
     page = request.GET.get('page')
     try:
@@ -416,8 +430,14 @@ def created_topic(request):
 @login_required()
 def replied_topic(request):
     """我回复的话题 @fanlintao """
-    reply_ids = Reply.objects.all().order_by('-create_time').filter(creator=request.user).values_list('topic', flat=True)
-    topics_list = Topic.objects.filter(id__in=reply_ids, status='enabled')[0:100]  # 显示100个
+    #reply_ids = Reply.objects.all().order_by('-create_time').filter(creator=request.user).values_list('topic', flat=True)
+    #topics_list = Topic.objects.filter(id__in=reply_ids, status='enabled')[0:100]  # 显示100个
+    
+    qs=request.user.creator_reply.all().order_by('-create_time')
+    topics_list = []
+    for item in qs:
+        topics_list.append(item.topic)
+
     paginator = Paginator(topics_list, settings.TOPIC_REPLY_PER_PAGE)
     page = request.GET.get('page')
     try:

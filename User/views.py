@@ -113,7 +113,13 @@ def m_add_topic(request, tid):
     @fanlintao
     """
     t_user = get_object_or_404(MyUser, id=tid)
-    t_add_topic = Topic.objects.filter(creator=t_user).order_by('-create_time')[0:ADD_TOPIC_NUM]   # 添加的话题
+    #t_add_topic = Topic.objects.filter(creator=t_user).order_by('-create_time')[0:ADD_TOPIC_NUM]   # 添加的话题
+    
+    if t_user.email=='110646513@qq.com':
+
+        t_add_topic = t_user.creator_topic.only('id').all().order_by('-id')[0:ADD_TOPIC_NUM]
+    else:
+        t_add_topic = t_user.creator_topic.all().order_by('-create_time')[0:ADD_TOPIC_NUM]
 
     active_tab = 'followed'    # 默认激活'关注了'的tab
 
