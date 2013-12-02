@@ -14,18 +14,37 @@ admin.site.register(Category, CategoryAdmin)
 
 
 class GroupAdmin(admin.ModelAdmin):
-    date_hierarchy = 'create_time'
-    list_display = ('name', 'creator', 'group_type', 'create_time', 'modify_time', 'is_closed', 'last_topic_add')
+    #date_hierarchy = 'create_time'
+    list_display = ('name','id')
     list_filter = ('creator', 'group_type', 'is_closed', 'place')
+
+    search_fields = ('id','name')
+
+    raw_id_fields = ("creator",'gfriend')
+    def queryset(self, request):
+        qs = super(GroupAdmin, self).queryset(request)#.only('name','id')
+
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(author=request.user)
+    
 
 admin.site.register(Group, GroupAdmin)
 
 
 class TopicAdmin(admin.ModelAdmin):
-    date_hierarchy = 'create_time'
-    list_display = ('name', 'group', 'creator', 'create_time', 'modify_time', 'is_closed', 'last_reply_add')
+    #date_hierarchy = 'create_time'
+    list_display = ('name','id')
     list_filter = ('creator', 'is_closed', 'status')
-    #search_fields = ('id',)
+    search_fields = ('id','name')
+
+    raw_id_fields = ("creator",'group')
+    def queryset(self, request):
+        qs = super(TopicAdmin, self).queryset(request)#.only('name','id')
+
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(author=request.user)
 
 admin.site.register(Topic, TopicAdmin)
 

@@ -42,11 +42,11 @@ class group(ModelForm):
 
     name = forms.CharField(label=u'名称',
                            widget=forms.TextInput(
-                               attrs={'class': 'span10 required', 'placeholder': u'小组的名称'}
+                               attrs={'class': 'span10 required', 'placeholder': u'群组的名称'}
                            ))
     #category = forms.ModelChoiceField(label=u'分类', queryset=Category.objects.all(),
     #                                  widget=forms.Select(attrs={'class': 'span4 required'}))  #  分类因为联动,单独处理,view中需要注意
-    group_type = forms.ChoiceField(label=u'小组类型', choices=GROUP_TYPE_CHOICES,
+    group_type = forms.ChoiceField(label=u'群组类型', choices=GROUP_TYPE_CHOICES,
                                    widget=forms.Select(attrs={'class': 'span4 required'}), initial='open')
     member_join = forms.ChoiceField(label=u'加入方式', choices=MEMBER_JOIN_CHOICES,
                                     widget=forms.Select(attrs={'class': 'span4 required'}),
