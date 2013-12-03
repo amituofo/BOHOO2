@@ -95,7 +95,10 @@
                         {% if groups %}
                             {% bootstrap_pagination groups url="/search?page=1&ty=group&search_content=" align="right" %}
                         {% else %}
-                            <h4 class="muted">没有搜索结果哦!</h4>
+                            <h4 class="muted">没有搜索结果哦!<br><br></h4>
+                            <span>
+                                <h4> 没有找到您感兴趣的群组 ？ 您可以 <a href="{% url 'new_group' %}">创建群组</a></h4>
+                             </span>
                         {% endif %}
                     {% elif ty == 'topic' %}
                         <table class="table table-hover">

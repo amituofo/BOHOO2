@@ -59,7 +59,7 @@
                     <div class="span9">
                         {{ form.member_join }}
                     <span class="help-inline">
-                        <span class="text-warning">任何人:任何用户都可以加入,无需验证<br/>需要验证:需群组管理员同意后才能加入群组</span>
+                        <span class="text-warning">任何人:任何用户都可以加入,无需验证<!--<br/>需要验证:需群组管理员同意后才能加入群组--></span>
                     </span>
                     </div>
                 </div>
@@ -72,6 +72,9 @@
                     </div>
                     <div class="span9">
                         {{ form.name }}
+                       <span class="help-inline">
+                        <span class="text-warning">请确保群组的名称是独一无二的，不能与已经存在的群组重名哦！</span>
+                    </span>
                     </div>
                 </div>
             </div>
