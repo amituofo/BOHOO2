@@ -54,9 +54,9 @@ def index(request):
             #return redirect('login')   # 跳转到登录页面
     if request.method == "GET":
         try:
-            groups_list = Group.objects.filter(category__id=request.GET["c_id"]).order_by("-last_topic_add")
+            groups_list = Group.objects.only('category').filter(category__id=request.GET["c_id"])
         except MultiValueDictKeyError:
-            groups_list = Group.objects.filter(category__name="互联网/电子商务").order_by("-last_topic_add")
+            groups_list = Group.objects.only('category').filter(category__name="互联网/电子商务")
         # 对群组分页
         paginator = Paginator(groups_list, settings.PAGINATION_PER_PAGE)
         page = request.GET.get('page')
@@ -95,7 +95,7 @@ def search(request):
     try:
         ty = request.GET['ty']    # 类型:群组/话题
         if ty == 'group':
-            group_qs_list = Group.objects.filter(name__icontains=content).distinct()
+            group_qs_list = Group.objects.only('name').filter(name__icontains=content)
             # 对群组分页
             paginator = Paginator(group_qs_list, settings.PAGINATION_PER_PAGE)
             page = request.GET.get('page')
