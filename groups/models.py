@@ -69,12 +69,13 @@ class Group(models.Model):
     last_topic_add = models.DateTimeField(null=True, blank=True, verbose_name=u'上一个话题创建的时间')
     topic_amount = models.IntegerField(default=0, verbose_name=u'话题总量')
     manager = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="user_manager", verbose_name=u"管理员")
+    workers = models.CharField(max_length=30, verbose_name=u'人数')
 
     #add by lazytiger
     place = models.CharField(max_length=30, verbose_name=u'地点')
     flag = models.IntegerField(default=0, verbose_name=u'群组级别')
     #end add 
-
+    
     def __unicode__(self):
         return self.name
 
