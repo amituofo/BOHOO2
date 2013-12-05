@@ -95,7 +95,7 @@ def search(request):
     try:
         ty = request.GET['ty']    # 类型:群组/话题
         if ty == 'group':
-            group_qs_list = Group.objects.only('name').filter(name__icontains=content)
+            group_qs_list = Group.objects.only('name').filter(name__icontains=content)[0:50]
             # 对群组分页
             paginator = Paginator(group_qs_list, settings.PAGINATION_PER_PAGE)
             page = request.GET.get('page')
