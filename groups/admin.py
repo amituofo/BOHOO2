@@ -105,10 +105,10 @@ admin.site.register(Report, ReportAdmin)
 
 
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ('applicant', 'group', 'reason', 'join_type', 'status')
-    list_filter = ('group', 'join_type', 'status')
+    list_display = ('applicant', 'reason', 'join_type', 'status')
+    list_filter = ( 'join_type', 'status')
     actions = ['pass_apply', 'reject_apply']
-
+    raw_id_fields = ('group')
     def pass_apply(self, request, queryset):
         """ 通过申请 @fanlintao """
         can_treat = True
