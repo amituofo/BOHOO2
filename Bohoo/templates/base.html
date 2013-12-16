@@ -1,8 +1,14 @@
 {% load compress avatar_tags %}
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
 <head>
+    <script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/4d5113d691c9bd9d0afc457ea61899e8/allmobilize.min.js"></script>
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+    
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{% block descrition %}{% endblock %}">
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
     <title>{% block title %}伯虎网——职业交流社区{% endblock %}</title>
@@ -122,7 +128,13 @@
     <div class="navbar-inner">
         <div class="container">
         <div class="main_navbar">
+            
             <a class="brand" href="#">伯虎网</a>
+            <ul class="nav" >
+                       <li>
+                         <wb:follow-button uid="2798662073"  type="red_1" width="67"  height="24"  ></wb:follow-button>
+                       </li>
+            </ul>
 
             <div class="nav-collapse collapse">
                 <ul class="nav">
@@ -204,7 +216,7 @@
 </span>
 
 <span class="fright">
-    <a href="{% url 'about' %}">关于</a>
+    <a href="http://www.bonghoo.com{% url 'about' %}">关于</a>
     · <a href="{% url 'contact_us' %}">联系</a>
     · <a href="{% url 'statement' %}">免责声明</a>
     · <a href="#">备案信息</a>
