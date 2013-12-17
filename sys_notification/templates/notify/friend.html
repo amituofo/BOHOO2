@@ -3,7 +3,7 @@
 {% block left_content %}
     <div class="row-fluid">
         <div class="span12">
-            <table class="table table-hover">
+            <table class="table">
                 {% for n in friend_notify %}
                     <tr id="notify_{{ n.id }}">
                         <td class="span10"><a href="{% url 'info_view' tid=n.follower.id %}">{{ n.follower.username }}</a>关注了你.</td>

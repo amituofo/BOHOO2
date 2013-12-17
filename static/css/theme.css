@@ -1,0 +1,82 @@
+﻿body {
+    padding-top: 120px; 
+    background-color: #eee;
+    background-image: url(images/furley_bg.png);
+    background-position: initial initial;
+    background-repeat: initial initial;
+    background-position: initial initial;
+    background-repeat: initial initial;
+}
+.form-signin {
+     max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+.input-prepend .add-on {
+    height:26px;
+}
+    .input-prepend .add-on i {
+        margin-top:3px;
+    }
+.bs-hr {
+    margin-top:60px; background-color:#d4d4d4; height:2px;
+}
+.bs-about a{
+    margin-left:10px;
+}
+/*ie6处理*/
+.ie6 .input-block-level {
+    width:88%; margin-bottom:15px; height:30px; line-height:30px;
+}
+.ie6 .input-prepend .add-on {
+    height:30px;
+}
+    .ie6 .input-prepend .add-on i {
+        margin-top:8px;
+    }
+.ie6 .inputsearch {
+    margin-top:-1px;
+}
+/*ie8处理*/
+.ie8 .input-prepend .add-on {
+    height:36px;
+}
+.ie8 .input-block-level {
+    line-height:30px;
+}
+ .ie8 .input-prepend .add-on i {
+        margin-top:8px;
+    }
+/*ie9处理*/
+.ie9 .input-prepend .add-on {
+    height:25px;
+}
+
+.bs-text h2 {
+    padding-bottom:30px;
+}
+.bs-text h3 {
+     padding-bottom:30px;
+}
+.bs-text h4 {
+    padding-bottom:30px;
+}

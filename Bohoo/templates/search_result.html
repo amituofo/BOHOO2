@@ -76,7 +76,7 @@
                     </ul>
 
                     {% if ty == 'group' %}
-                        <table class="table table-hover">
+                        <table class="table ">
                             {% for g in groups %}
                                 <tr>
                                     <td style="width: 30%">
@@ -101,7 +101,7 @@
                              </span>
                         {% endif %}
                     {% elif ty == 'topic' %}
-                        <table class="table table-hover">
+                        <table class="table ">
                             {% for t in topics %}
                                 <tr>
                                     <td><a href="{% url 'topic_detail' topic_id=t.id %}">{{ t.name|truncatechars:25 }}</a></td>

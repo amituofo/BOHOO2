@@ -3,7 +3,7 @@
 {% block left_content %}
     <div class="row-fluid">
         <div class="span12">
-            <table class="table table-hover">
+            <table class="table ">
                 {% for n in topic_notify %}
                     {% if n.topic_action == 're_topic' %}
                         <tr id="notify_{{ n.id }}">

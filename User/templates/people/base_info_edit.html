@@ -238,11 +238,12 @@
 {% compress js %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/js/json2.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/messenger.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery_fix_csrf.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.chained.min.js"></script>
-    <script type="text/javascript" src={{ STATIC_URL }}js/cities.js></script>  {# 引进cities数据 #}
-    <script type="text/javascript" src={{ STATIC_URL }}js/job_category.js></script>  {# 引进job_category数据 #}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/cities.js"></script>  {# 引进cities数据 #}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/job_category.js"></script>  {# 引进job_category数据 #}
     <script type="text/javascript">
     // 设置messager插件的样式
         $._messengerDefaults = {

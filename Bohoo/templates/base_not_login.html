@@ -1,11 +1,8 @@
-{% load compress avatar_tags %}
+﻿{% load compress avatar_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn" xmlns:wb="http://open.weibo.com/wb">
 <head>
-    <script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/4d5113d691c9bd9d0afc457ea61899e8/allmobilize.min.js"></script>
-    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="360-site-verification" content="a540f1321adc5043651feb43b532fdea" />
     <meta name="description" content="{% block descrition %}欢迎来到伯虎网——最纯
 粹的职业交流社区！在这里你可以找到同行业的朋友，在这里你可以了解同行业的其他公司
@@ -13,16 +10,28 @@
 发表对某个企业工作环境，服务及产品的建议！{% endblock %}">
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
     <title>{% block title %}{% endblock %}</title>
-{% compress css %}
-    <!-- boorstrap and font awesome -->
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/messenger/messenger.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+    {% compress css %}
+	<!-- css -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap.min.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}lib/bootstrap/css/bootstrap-ie6.min.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}lib/bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}lib/css/theme.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/messenger/messenger.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/messenger/messenger-theme-block.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.qtip.min.css">
-    <!-- bootstrap and awesome font end -->
-    <style type="text/css">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="{{ STATIC_URL }}lib/js/html5.js"></script>
+    <![endif]-->
+     <style type="text/css">
     .main_navbar{
         margin-left: 100px;
         margin-right: 100px;
@@ -121,108 +130,124 @@
     }
     </style>
 {% endcompress %}
-{% block head_other %}{% endblock %}
 </head>
-
-<body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-        <div class="main_navbar">
-            <a class="brand" href="#">伯虎</a>
-
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li>
-                        <form class="search-query" action="{% url 'search' %}" method="get"> <!-- 默认显示群组 -->
-                            <div class="input-append">
-                                <input type="hidden" name="ty" value="group" />
-                                <input class="search-input" name="search_content" type="text" placeholder="搜索公司或群组" />
-                                <button class="btn btn-primary" id="search-button"><i class="icon-search icon-large"></i></button>
-                            </div>
-                        </form>
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body class="">
+    <!--<![endif]-->
+    <!-- 顶部 -->
+    <div class="navbar navbar-static-top"  >
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">伯虎网</a>
+                   <ul class="nav" >
+                       <li>
+                         <wb:follow-button uid="2798662073"  type="red_1" width="67"  height="24"  ></wb:follow-button>
+                       </li>                
+                 </ul>
+                <!--  <ul class="nav">
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ STATIC_URL }}lib/css/images/weibo.png" /> 微博关注 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">新浪微博</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">腾讯微博</a></li>
+                        </ul>
                     </li>
-                </ul>
+                </ul>-->
+                <form class="navbar-search search-query" action="{% url 'search' %}">
+                    <!-- 默认显示群组 -->
+                    <span class="input-append">
+                        <input type="hidden" name="ty" value="group" />
+                        <input name="search_content" class="inputsearch search-input" type="text" placeholder="搜索公司或群组">
+                        <button class="btn btn-primary" id="search-button" type="button"><i class="icon-search icon-white"></i></button>
+                    </span>
+                </form>
                 <ul class="nav">
                     <li>
                         <a href="{% url 'index' %}?init=1"><i class="icon-home"></i>首页</a>
                     </li>
-{#                    <li>#}
-{#                        <a href="#"><i class="icon-leaf"></i>推荐</a>#}
-{#                    </li>#}
-                    <li>
-                        <a href="{% url 'group_my_manage' %}"><i class="icon-comments"></i>我的伯虎</a>
-                    </li>
-                    <li class="dropdown action">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
-                            <i class="icon-envelope-alt"></i>通知<b id="notify-all"></b> <!-- class="bdage" -->
-                            <i class="icon-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{% url 'notify_group' %}">群组<b id="notify-group"></b></a></li>  <!-- class="bdage-hor" -->
-                            <li><a href="{% url 'notify_topic' %}">话题<b id="notify-topic"></b></a></li>
-                            <li><a href="">好友<b id="notify-friend"></b></a></li>
-{#                            <li class="divider"></li>#}
-{#                            <li><a href="">全部</a></li>#}
-                        </ul>
-                    </li>
-                </ul>
-            </div>
 
-                <ul class="nav pull-right" style="margin-right: 50px">
-                    {% if request.user.is_authenticated %}
-                        <li class="dropdown action">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
-                            {% avatar request.user 40 %}{{ request.user.username }}
-                            <i class="icon-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{% url 'profile_view' request.user.id %}">我的帐号</a></li>
-                            <li><a href="{% url 'profile_edit' %}">编辑个人资料</a></li>
-                            <li><a href="{% url 'reset_password' user_id=request.user.id %}">修改密码</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{% url 'logout' %}">退出</a></li>
+{#                  <li>#}
+{#                        <a href="#"><i class="icon-leaf"></i>推荐</a>#}
+{#                  </li>#}
+
+                    <li>
+                        <a href="{% url 'group_my_manage' %}"><i class=" icon-comment"></i>我的伯虎</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-envelope"></i>通知 <b id="notify-all"></b><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'notify_group' %}">群组<b id="notify-group"></b></a></li>
+                            <!-- class="bdage-hor" -->
+                            <li><a href="{% url 'notify_topic' %}">话题<b id="notify-topic"></b></a></li>
+                            <li><a href="{% url 'notify_friend' %}">好友<b id="notify-friend"></b></a></li>
+{#                          <li class="divider"></li>#}
+{#                          <li><a href="">全部</a></li>#}
                         </ul>
                     </li>
-                    {% else %}
-                    <li>
-                        <span style="padding: 10px 0  0 10px !important; display: block;color: #777777; padding-right: 0">
-                            已有帐号? 请
-                        </span>
-                    </li>
-                    <li>
-                        <a href="{% url 'login' %}" style="color: #006dcc; padding-left: 0">登录</a>
-                    </li>
-                    {% endif %}
                 </ul>
+                {% if request.user.is_authenticated %}
+                <ul class="nav pull-right">
+                        <li class="dropdown action">
+                            <a class="dropdown-toggle bs-img40" role="button" data-toggle="dropdown">{% avatar request.user 40 %}{{ request.user.username }}
+                            <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{% url 'profile_view' request.user.id %}">我的帐号</a></li>
+                                <li><a href="{% url 'profile_edit' %}">编辑个人资料</a></li>
+                                <li><a href="{% url 'reset_password' user_id=request.user.id %}">修改密码</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{% url 'logout' %}">退出</a></li>
+                            </ul>
+                        </li>
+                </ul>
+                  {% else %}
+                 <p class="pull-right navbar-text">
+                    已有帐号?请 <a href="{% url 'login' %}">登录</a>
+                </p>
+                {% endif %}
+
             </div>
         </div>
     </div>
-</div>
+    <!-- 中间 -->
 
-<div class="main-content" style="width:1000px;margin: 0 auto;float: none;">
+     <div class="container bs-m20">
     {% block main %}{% endblock %}
-</div>
+    </div>
 
-<footer id="footer">
-<span id="icp" class="fleft gray-link">
-    © 2013-2014 伯虎网
-</span>
-
-<span class="fright">
-    <a href="{% url 'about' %}">关于</a>
-    · <a href="{% url 'contact_us' %}">联系</a>
-    · <a href="{% url 'statement' %}">免责声明</a>
-    · <a href="#">备案信息</a>
-</span>
-</footer>
-
-{% compress js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+   
+    <hr class="bs-hr" />
+    <!-- 底部 -->
+    <div class="container">
+        <div class="pull-left">
+            <p class="muted credit">© 2013-2014 伯虎网 </p>
+        </div>
+        <div class="pull-right bs-about">
+            <a href="{% url 'about' %}">关于</a>
+            <a href="{% url 'contact_us' %}">联系</a>
+            <a href="{% url 'statement' %}">免责声明</a>
+            <a href="#">备案信息</a>
+        </div>
+    </div>
+   
+  
+    {% compress js %}
+    <script src="{{ STATIC_URL }}lib/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}lib/js/json2.js" type="text/javascript"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/messenger.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery_fix_csrf.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip.min.js"></script>
+
+    <!--[if lte IE 6]>
+    <script type="text/javascript" src="{{ STATIC_URL }}lib/bootstrap/js/bootstrap-ie.js"></script>
+    <![endif]-->
+
     <script type="text/javascript">
         // 设置messager插件的样式
         $._messengerDefaults = {
@@ -246,10 +271,12 @@
     </script>
 {% endcompress %}
 {% block js_other %}{% endblock %}
-<script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7e1c7b730b3ea6c24c7db4b1ec99fd59' type='text/javascript'%3E%3C/script%3E"));
-</script>
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7e1c7b730b3ea6c24c7db4b1ec99fd59' type='text/javascript'%3E%3C/script%3E"));
+    </script>
 
 </body>
 </html>
+
+

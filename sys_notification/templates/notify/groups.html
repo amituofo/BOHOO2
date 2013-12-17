@@ -3,7 +3,7 @@
 {% block left_content %}
     <div class="row-fluid">
         <div class="span12">
-            <table class="table table-hover">
+            <table class="table ">
                 {% for n in group_notify %}
                     {% if n.group_action == 'pass' %}
                         {% if n.applicant.join_type == 'member' %}
