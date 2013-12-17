@@ -56,7 +56,7 @@ def index(request):
         try:
             groups_list = Group.objects.only('category','flag').filter(category__id=request.GET["c_id"],flag=1)
         except MultiValueDictKeyError:
-            groups_list = Group.objects.only('category','flag').filter(category__name="互联网/电子商务",flag=1)
+            groups_list = Group.objects.only('category','flag').filter(category__name="计算机软件",flag=1)
         # 对群组分页
         paginator = Paginator(groups_list, settings.PAGINATION_PER_PAGE)
         page = request.GET.get('page')
@@ -70,8 +70,8 @@ def index(request):
 
     #recent_topics = Topic.objects.filter(status='enabled').order_by("-last_reply_add")[:5]
     categories = Category.objects.filter(parent__isnull=True)  # 顶级分类
-    init_ca_id = Category.objects.get(name="互联网/电子商务").id   #初始化的分类的id
-    init_ca_parent_id = Category.objects.get(name="互联网/电子商务").parent.id
+    init_ca_id = Category.objects.get(name="计算机软件").id   #初始化的分类的id
+    init_ca_parent_id = Category.objects.get(name="计算机软件").parent.id
     vt = loader.get_template("index.html")
     c = RequestContext(
         request, {
