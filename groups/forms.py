@@ -84,7 +84,7 @@ class topicForm(ModelForm):
 
     class Meta:
         model = Topic
-        fields = ('name', 'content', 'group')
+        fields = ('name', 'content','topic_type', 'group')
 
     def __unicode__(self):
         return "话题:%s" % self.name
