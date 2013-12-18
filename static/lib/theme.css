@@ -149,7 +149,23 @@
 .ie7 .left-list li i {
     margin-top:-20px;
 }
+  .ie7 .bs-btn .span12{
+            margin-left:-10px;
+        }
+         .bs-btn .bs-btn1 {
+            margin-top:20px;
+        }
 
+        .ie7 .bs-btn .bs-btn1 .span6:first-child {
+            margin-left:-5px; margin-right:5px;
+        }
+
+        .ie7 .bs-btn textarea {
+            width:97%;
+        }
+        .ie7 .bs-ip1 .span12 {
+            width:97%;
+        }
 /*ie8处理*/
 .ie8 .form-signin .input-prepend .add-on {
     height:36px;
