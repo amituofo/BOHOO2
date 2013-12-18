@@ -54,9 +54,9 @@ def index(request):
             #return redirect('login')   # 跳转到登录页面
     if request.method == "GET":
         try:
-            groups_list = Group.objects.only('category','flag').filter(category__id=request.GET["c_id"],flag=1)
+            groups_list = Group.objects.only('category','flag').filter(category__id=request.GET["c_id"],flag=1)[0:100]
         except MultiValueDictKeyError:
-            groups_list = Group.objects.only('category','flag').filter(category__name="计算机软件",flag=1)
+            groups_list = Group.objects.only('category','flag').filter(category__name="计算机软件",flag=1)[0:100]
         # 对群组分页
         paginator = Paginator(groups_list, settings.PAGINATION_PER_PAGE)
         page = request.GET.get('page')
