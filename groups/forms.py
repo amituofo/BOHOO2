@@ -72,8 +72,11 @@ class topicForm(ModelForm):
     content  内容
     group 小组
     """
+    TOPIC_TYPE_CHOICES = ((2,'公司杂谈'), (3,'拼车信息'))
     name = forms.CharField(label=u'标题', widget=forms.TextInput(attrs={'class': 'span12 required'}))
     content = forms.CharField(label=u'内容', widget=forms.Textarea(attrs={'class': 'span12 required'}))
+    topic_type = forms.ChoiceField(label=u'话题类型', choices=TOPIC_TYPE_CHOICES,
+                                   widget=forms.Select(attrs={'class': 'span4 required'}), initial=2)
 
     def __init__(self, *args, **kwargs):
         super(topicForm, self).__init__(*args, **kwargs)
