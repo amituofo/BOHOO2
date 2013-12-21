@@ -102,11 +102,13 @@
                 </div>
 
                 <div class="row-fluid   topic-tab">
+                    {%ifnotequal g.flag 2%}
                     <ul class="nav nav-pills">
                         <li id="pills-recent"><a href="{% url 'group_detail' group_id=g.id %}?type=recent#to_topics">公司杂谈</a></li>
                         <li id="pills-hot"><a href="{% url 'group_detail' group_id=g.id %}?type=hot#to_topics">拼车信息</a></li>
                         
                     </ul>
+                    {%endifnotequal%}
                     <ul class="nav pull-right">
                         <li >
                             <a href="{% url 'add_topic' group_id=g.id %}" id="create-topic">
