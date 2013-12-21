@@ -74,9 +74,13 @@
                     </div>
                 </div>
             </div>
-            {%ifnotequal g.flag 2%} 
             <div class="box-module">
-                <div class="row-fluid">
+                 {%ifnotequal g.flag 2%}
+                 <div class="row-fluid">
+                {%else%}
+                <div class="row-fluid" style="display:none;">
+                {%endifnotequal%}
+
                     <div class="span3">
                         <span class="text-info"><span class="mustin">*</span>{{ form.topic_type.label }}</span>
                     </div>
@@ -86,7 +90,6 @@
                     </div>
                 </div>
             </div>
-            {%endifnotequal%}
             <div class="box-module">
                 <div class="row-fluid">
                     <div class="span3">
