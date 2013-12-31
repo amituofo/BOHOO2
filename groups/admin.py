@@ -54,6 +54,7 @@ class ReplyAdmin(admin.ModelAdmin):
     list_display = ('content', 'creator', 'topic', 'create_time', 'reply', 'status')
     list_filter = ('status', 'creator',)
     #search_fields = ('id',)
+    raw_id_fields = ("creator",'topic')
 
 admin.site.register(Reply, ReplyAdmin)
 
