@@ -84,6 +84,11 @@
                                     {% endif %}
                                 </span>
                                 <span class="text-success">{{ topic.create_time|date:"Y-m-j H:i:s" }}</span>
+                                <span class="muted">来源:</span>
+                                <span class="text-success">
+                                 {{ topic.sourcename }}
+                                </span>
+
                                 <span class="report">
                                     <a href="{{ topic.id }}" class="report-topic muted">举报</a>
                                 </span>
