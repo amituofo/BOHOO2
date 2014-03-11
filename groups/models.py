@@ -103,7 +103,10 @@ class Group(models.Model):
         """
         返回数量为amount,默认为5,以最后回复排序的话题,返回queryset
         """
-        return self.group_topic.filter(status='enabled').order_by("-last_reply_add")[:amount]
+        if self.flag==2:
+            return self.group_topic.filter(status='enabled').order_by("-last_reply_add")[:amount]
+        else:
+            return self.group_topic.filter(status='enabled').order_by("-last_reply_add").filter(topic_type=1)[:amount]
 
 
 class TopicImage(models.Model):
@@ -183,7 +186,7 @@ class Topic(models.Model):
         db_table = 'topic'
 
     def save(self, *args, **kwargs):
-        if self.group.flag !=2:
+        if self.group.flag !=2 and self.topic_type!=4 and self.topic_type!=5:
             self.group.last_topic_add = self.create_time  # 更新“最新话题添加时间”
         self.group.topic_amount += 1  # 小组话题数+1
         self.group.save()

@@ -95,13 +95,13 @@ def group_detail(request, group_id):
             is_manager_processing = False
 
         topic_qs = Topic.objects.filter(group=group, status='enabled')
-        topics_list = topic_qs.filter(topic_type__in=[1,2]).order_by("-last_reply_add")  # 默认按最近回复时间排序
+        topics_list = topic_qs.filter(topic_type__in=[1,2,4,0]).order_by("-last_reply_add")  # 默认按最近回复时间排序
         try:
             if request.GET['type'] == 'recent':   # 最近话题:按最近回复时间排序
                 #topics_list = topic_qs.order_by("-last_reply_add")
                 pass
             elif request.GET['type'] == 'hot':    # 最热话题:按回复数量排序
-                topics_list = topic_qs.filter(topic_type=3).order_by("-last_reply_add")
+                topics_list = topic_qs.filter(topic_type=5).order_by("-last_reply_add")
         except MultiValueDictKeyError:
             pass
 
