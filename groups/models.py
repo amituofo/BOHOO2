@@ -106,7 +106,7 @@ class Group(models.Model):
         if self.flag==2:
             return self.group_topic.filter(status='enabled').order_by("-last_reply_add")[:amount]
         else:
-            return self.group_topic.filter(status='enabled').order_by("-last_reply_add").filter(topic_type=1)[:amount]
+            return self.group_topic.filter(status='enabled').order_by("-last_reply_add").filter(topic_type__in=[0,1,2,3])[:amount]
 
 
 class TopicImage(models.Model):
